@@ -26,12 +26,14 @@ nsis:
   shortcutName: Liuyun Kiro
   uninstallDisplayName: Liuyun Kiro
   createDesktopShortcut: always
-  oneClick: false           # 关闭一键安装，显示安装向导
-  allowToChangeInstallationDirectory: true  # 允许选择安装位置
+  oneClick: false
+  allowToChangeInstallationDirectory: true
   perMachine: false
-  runAfterFinish: false     # 安装完不自动启动
+  runAfterFinish: false
   installerIcon: resources/kiro-high-resolution-logo-transparent.ico
   uninstallerIcon: resources/kiro-high-resolution-logo-transparent.ico
+portable:
+  artifactName: ${name}-${version}-${arch}-portable.${ext}
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
