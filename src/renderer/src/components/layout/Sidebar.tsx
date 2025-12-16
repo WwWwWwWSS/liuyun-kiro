@@ -1,7 +1,6 @@
 import { Home, Users, Settings, ChevronLeft, ChevronRight, Fingerprint } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import kiroLogo from '@/assets/Kiro Logo.png'
-import { useAccountsStore } from '@/store/accounts'
 
 export type PageType = 'home' | 'accounts' | 'machineId' | 'settings'
 
@@ -20,8 +19,6 @@ const menuItems: { id: PageType; label: string; icon: React.ElementType }[] = [
 ]
 
 export function Sidebar({ currentPage, onPageChange, collapsed, onToggleCollapse }: SidebarProps) {
-  // darkMode 可从 useAccountsStore 获取，用于后续深色模式适配
-
   return (
     <div 
       className={cn(
