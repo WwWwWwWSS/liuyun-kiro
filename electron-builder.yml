@@ -1,0 +1,58 @@
+appId: com.liuyun.kiro
+productName: Liuyun Kiro
+directories:
+  buildResources: build
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintcache,eslint.config.mjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+asarUnpack:
+  - resources/**
+protocols:
+  name: Kiro Auth
+  schemes:
+    - kiro
+copyright: Copyright 2025 Liuyun
+win:
+  executableName: liuyun-kiro
+  icon: resources/kiro-high-resolution-logo-transparent.ico
+  legalTrademarks: Copyright 2025 Liuyun
+  signAndEditExecutable: false
+nsis:
+  artifactName: ${name}-${version}-${arch}-setup.${ext}
+  shortcutName: Liuyun Kiro
+  uninstallDisplayName: Liuyun Kiro
+  createDesktopShortcut: always
+  oneClick: false           # 关闭一键安装，显示安装向导
+  allowToChangeInstallationDirectory: true  # 允许选择安装位置
+  perMachine: false
+  runAfterFinish: false     # 安装完不自动启动
+  installerIcon: resources/kiro-high-resolution-logo-transparent.ico
+  uninstallerIcon: resources/kiro-high-resolution-logo-transparent.ico
+mac:
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    - NSCameraUsageDescription: Application requests access to the device's camera.
+    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
+    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
+    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+  notarize: false
+dmg:
+  artifactName: ${name}-${version}-${arch}.${ext}
+linux:
+  target:
+    - AppImage
+    - snap
+    - deb
+  maintainer: electronjs.org
+  category: Utility
+appImage:
+  artifactName: ${name}-${version}-${arch}.${ext}
+snap:
+  publish:
+    provider: generic
+    url: https://example.com/auto-updates
+npmRebuild: false
