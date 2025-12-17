@@ -1735,16 +1735,39 @@ app.whenReady().then(() => {
   })
 
   // IPC: 从文件导入
-  ipcMain.handle('import-from-file', async () => {
+  ipcMain.handle('import-from-file', async (_event, allowedFormats?: string[]) => {
     try {
-      const result = await dialog.showOpenDialog(mainWindow!, {
-        title: '导入账号数据',
-        filters: [
+      // 根据允许的格式构建过滤器
+      let filters: { name: string; extensions: string[] }[]
+      
+      if (allowedFormats && allowedFormats.length > 0) {
+        // 使用指定的格式
+        const formatNames: Record<string, string> = {
+          'json': 'JSON Files',
+          'csv': 'CSV Files',
+          'txt': 'TXT Files'
+        }
+        filters = allowedFormats.map(ext => ({
+          name: formatNames[ext] || `${ext.toUpperCase()} Files`,
+          extensions: [ext]
+        }))
+        // 如果有多个格式，添加一个"所有支持的格式"选项
+        if (allowedFormats.length > 1) {
+          filters.unshift({ name: '所有支持的格式', extensions: allowedFormats })
+        }
+      } else {
+        // 默认支持所有格式
+        filters = [
           { name: '所有支持的格式', extensions: ['json', 'csv', 'txt'] },
           { name: 'JSON Files', extensions: ['json'] },
           { name: 'CSV Files', extensions: ['csv'] },
           { name: 'TXT Files', extensions: ['txt'] }
-        ],
+        ]
+      }
+      
+      const result = await dialog.showOpenDialog(mainWindow!, {
+        title: '导入账号数据',
+        filters,
         properties: ['openFile']
       })
 

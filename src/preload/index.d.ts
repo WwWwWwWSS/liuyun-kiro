@@ -168,7 +168,7 @@ interface KiroApi {
 
   // 文件操作
   exportToFile: (data: string, filename: string) => Promise<boolean>
-  importFromFile: () => Promise<{ content: string; format: string } | null>
+  importFromFile: (allowedFormats?: string[]) => Promise<{ content: string; format: string } | null>
 
   // 验证凭证并获取账号信息
   verifyAccountCredentials: (credentials: {
