@@ -1,6 +1,6 @@
 {
   "name": "liuyun-kiro",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Liuyun Kiro - Kiro 账号管理工具",
   "main": "./out/main/index.js",
   "author": "Liuyun",
