@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { AccountManager } from './components/accounts'
 import { Sidebar, type PageType } from './components/layout'
-import { HomePage, SettingsPage, MachineIdPage } from './components/pages'
+import { HomePage, SettingsPage, MachineIdPage, RedeemPage } from './components/pages'
 import { UpdateDialog } from './components/UpdateDialog'
 import { useAccountsStore } from './store/accounts'
 
@@ -48,6 +48,8 @@ function App(): React.JSX.Element {
         return <HomePage />
       case 'accounts':
         return <AccountManager />
+      case 'redeem':
+        return <RedeemPage />
       case 'machineId':
         return <MachineIdPage />
       case 'settings':
