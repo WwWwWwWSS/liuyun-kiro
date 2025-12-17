@@ -141,8 +141,8 @@ const api = {
   },
 
   // 文件操作 - 从文件导入
-  importFromFile: (): Promise<string | null> => {
-    return ipcRenderer.invoke('import-from-file')
+  importFromFile: (allowedFormats?: string[]): Promise<{ content: string; format: string } | null> => {
+    return ipcRenderer.invoke('import-from-file', allowedFormats)
   },
 
   // 验证凭证并获取账号信息
