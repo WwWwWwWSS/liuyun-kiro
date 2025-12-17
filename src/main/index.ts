@@ -823,6 +823,74 @@ app.whenReady().then(() => {
     }
   })
 
+  // IPC: 卡券兑换 API 请求（绕过 CORS 限制）
+  ipcMain.handle('redeem-voucher', async (_event, serverUrl: string, voucherCode: string) => {
+    console.log(`[IPC] Redeeming voucher: ${voucherCode} at ${serverUrl}`)
+    
+    try {
+      const url = `${serverUrl}/api/redeem`
+      console.log(`[IPC] Fetching: ${url}`)
+      
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({ code: voucherCode }),
+      })
+      
+      console.log(`[IPC] Response status: ${response.status}`)
+      
+      const data = await response.json()
+      console.log(`[IPC] Response data:`, data)
+      
+      return {
+        success: true,
+        status: response.status,
+        data
+      }
+    } catch (error) {
+      console.error('[IPC] Redeem voucher error:', error)
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error'
+      }
+    }
+  })
+
+  // IPC: 检查卡券服务器健康状态
+  ipcMain.handle('check-voucher-server', async (_event, serverUrl: string) => {
+    console.log(`[IPC] Checking voucher server: ${serverUrl}`)
+    
+    try {
+      const url = `${serverUrl}/api/health`
+      console.log(`[IPC] Fetching: ${url}`)
+      
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        },
+      })
+      
+      console.log(`[IPC] Response status: ${response.status}`)
+      
+      if (response.ok) {
+        const data = await response.json()
+        return { success: true, data }
+      } else {
+        return { success: false, error: `HTTP ${response.status}` }
+      }
+    } catch (error) {
+      console.error('[IPC] Check server error:', error)
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error'
+      }
+    }
+  })
+
   // IPC: 刷新账号 Token（支持 IdC 和社交登录）
   ipcMain.handle('refresh-account-token', async (_event, account) => {
     try {

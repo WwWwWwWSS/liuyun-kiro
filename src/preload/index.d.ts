@@ -479,6 +479,36 @@ interface KiroApi {
 
   // 删除 MCP 服务器
   deleteMcpServer: (name: string) => Promise<{ success: boolean; error?: string }>
+
+  // ============ 卡券兑换 API ============
+
+  // 兑换卡券（通过主进程代理请求，绕过 CORS）
+  redeemVoucher: (serverUrl: string, voucherCode: string) => Promise<{
+    success: boolean
+    status?: number
+    data?: {
+      success: boolean
+      message?: string
+      token?: string
+      data?: {
+        refreshToken?: string
+        clientId?: string
+        clientSecret?: string
+        region?: string
+        authMethod?: string
+        provider?: string
+      }
+      error?: string
+    }
+    error?: string
+  }>
+
+  // 检查卡券服务器健康状态
+  checkVoucherServer: (serverUrl: string) => Promise<{
+    success: boolean
+    data?: { status: string; timestamp: string }
+    error?: string
+  }>
 }
 
 declare global {
